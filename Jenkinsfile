@@ -28,19 +28,13 @@ pipeline{
 
 }
 }
-   
-   stage("create_instance"){
-      //createing instance using terraform
-      steps{
-       resource "aws_instance" "web" {
-         ami= "ami-09052aa9bc337c78d"
-         instance_type = "t2.micro"
-
-         tags = {
-         Name = "HelloWorld"
+      
+   stage("terraform_init"){
+     //terraform init
+     steps{
+      script{
+       sh "bash plugins.sh"
 }
-}
-
 }
 }
 
@@ -48,23 +42,11 @@ pipeline{
      //static analysis
       steps{
        script{
-       sh ''' 
-	cd infra
-	"terraform validate"
-	cd -
-	'''
-}
-}
-}   
-   stage("terraform_init"){
-     //terraform init
-     steps{
-      script{
-       sh ''' 
-	cd infra
-	"bash bash.sh"
-	cd -
-	'''
+       sh '''
+        cd infra
+        terraform validate
+        cd -
+       '''
 }
 }
 }
@@ -74,9 +56,9 @@ pipeline{
        script{
        sh '''
 	 cd infra
-	"terraform plan"
+	terraform plan
 	 cd -
-	'''
+       '''
 }
 }
 }
@@ -87,9 +69,9 @@ pipeline{
       script{
       sh '''
 	   cd infra
-	   "terraform apply --auto-approve"
+	   terraform apply --auto-approve
  	   cd -
-    '''
+      '''
 }
 }
 }
