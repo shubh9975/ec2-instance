@@ -71,9 +71,12 @@ pipeline{
  
    stage("terraform_apply"){
     //terraform apply
-     stapes{
+     steps{
       script{
-       sh"terraform apply --auto-approve"
+      sh '''
+	   cd infra
+	   "terraform apply --auto-approve"
+	   cd -
 }
 }
 }
