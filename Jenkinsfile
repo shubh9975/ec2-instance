@@ -48,7 +48,10 @@ pipeline{
      //static analysis
       steps{
        script{
-       sh "terraform validate"
+       sh ''' 
+	cd infra
+	"terraform validate"
+	cd -
 }
 }
 }   
@@ -56,7 +59,10 @@ pipeline{
      //terraform init
      steps{
       script{
-       sh"bash bash.sh"
+       sh ''' 
+	cd infra
+	"bash bash.sh"
+	cd -
 }
 }
 }
@@ -64,7 +70,10 @@ pipeline{
      //terraform plan
       steps{
        script{
-        sh"terraform plan"
+       sh '''
+	 cd infra
+	"terraform plan"
+	 cd -
 }
 }
 }
@@ -76,7 +85,8 @@ pipeline{
       sh '''
 	   cd infra
 	   "terraform apply --auto-approve"
-	   cd -
+ 	   cd -
+    '''
 }
 }
 }
