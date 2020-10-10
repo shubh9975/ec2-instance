@@ -52,6 +52,7 @@ pipeline{
 	cd infra
 	"terraform validate"
 	cd -
+	'''
 }
 }
 }   
@@ -63,6 +64,7 @@ pipeline{
 	cd infra
 	"bash bash.sh"
 	cd -
+	'''
 }
 }
 }
@@ -74,6 +76,7 @@ pipeline{
 	 cd infra
 	"terraform plan"
 	 cd -
+	'''
 }
 }
 }
